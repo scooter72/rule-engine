@@ -16,9 +16,11 @@ public abstract class AbstractRuleDefinitionReader implements RuleDefinitionRead
     public List<RuleDefinition> read(Reader reader) throws Exception {
         List<RuleDefinition> ruleDefinitions = new ArrayList<>();
         Iterable<Map<String, Object>> rules = loadRules(reader);
+
         for (Map<String, Object> rule : rules) {
             ruleDefinitions.add(createRuleDefinition(rule));
         }
+
         return ruleDefinitions;
     }
 

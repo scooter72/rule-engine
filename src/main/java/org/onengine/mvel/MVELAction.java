@@ -17,13 +17,12 @@ import lombok.ToString;
 @ToString
 public class MVELAction implements Action {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MVELAction.class);
-
+    private static final Logger logger = LoggerFactory.getLogger(MVELAction.class);
     private final String expression;
     private final Serializable compiledExpression;
 
     /**
-     * Create a new {@link MVELAction}.
+     * Create a new VELAction.
      *
      * @param expression the action written in expression language
      */
@@ -33,7 +32,7 @@ public class MVELAction implements Action {
     }
 
     /**
-     * Create a new {@link MVELAction}.
+     * Create a new MVELAction.
      *
      * @param expression the action written in expression language
      * @param parserContext the MVEL parser context
@@ -47,9 +46,9 @@ public class MVELAction implements Action {
     public void execute(Facts facts) {
         try {
             MVEL.executeExpression(compiledExpression, facts.asMap());
-        } catch (Exception e) {
-            LOGGER.error("Unable to evaluate expression: '" + expression + "' on facts: " + facts, e);
-            throw e;
+        } catch (Throwable ex) {
+            logger.error("Unable to evaluate expression: '" + expression + "' on facts: " + facts, ex);
+            throw ex;
         }
     }
 }

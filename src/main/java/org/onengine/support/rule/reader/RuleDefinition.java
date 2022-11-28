@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * Rule definition as defined in a rule descriptor.
- * This class encapsulates the static definition of a {Rule.
+ * This class encapsulates the static definition of a Rule.
  */
 public class RuleDefinition {
 

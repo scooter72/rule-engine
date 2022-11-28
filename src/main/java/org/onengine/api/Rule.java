@@ -41,7 +41,7 @@ public interface Rule {
 
     /**
      * This method implements the rule's action(s).
-     * @throws Exception thrown if an exception occurs when performing action(s)
+     * @throws ActionExecutionException thrown if an exception occurs when performing action(s)
      */
     void execute(Facts facts) throws ActionExecutionException;
 }

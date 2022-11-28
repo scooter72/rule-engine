@@ -16,7 +16,7 @@ public class YamlRuleDefinitionReader extends AbstractRuleDefinitionReader {
     private final Yaml yaml;
 
     /**
-     * Create a new {@link YamlRuleDefinitionReader}.
+     * Create a new YamlRuleDefinitionReader.
      */
     public YamlRuleDefinitionReader() {
         this(new Yaml());
@@ -35,9 +35,11 @@ public class YamlRuleDefinitionReader extends AbstractRuleDefinitionReader {
     protected Iterable<Map<String, Object>> loadRules(Reader reader) {
         List<Map<String, Object>> rulesList = new ArrayList<>();
         Iterable<Object> rules = yaml.loadAll(reader);
+
         for (Object rule : rules) {
             rulesList.add((Map<String, Object>) rule);
         }
+
         return (Iterable<Map<String, Object>>) rulesList.get(0).get("rules");
     }
 }

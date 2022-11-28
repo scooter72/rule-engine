@@ -12,7 +12,6 @@ import java.io.Serializable;
  * This class is an implementation of Condition that uses
  * <a href="https://github.com/mvel/mvel">MVEL</a> to evaluate the condition.
  *
- * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 @ToString
 public class MVELCondition implements Condition {

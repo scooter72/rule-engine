@@ -5,7 +5,7 @@ import lombok.ToString;
 import java.util.Objects;
 
 /**
- * A class representing a named fact. Facts have unique names within a {@link Facts}
+ * A class representing a named fact. Facts have unique names within a Facts
  * instance.
  * 
  * @param <T> type of the fact

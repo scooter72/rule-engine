@@ -16,12 +16,12 @@ public interface Condition {
     boolean evaluate(Facts facts);
 
     /**
-     * A NoOp {@link Condition} that always returns false.
+     * A NoOp Condition that always returns false.
      */
     Condition FALSE = facts -> false;
 
     /**
-     * A NoOp {@link Condition} that always returns true.
+     * A NoOp Condition that always returns true.
      */
     Condition TRUE = facts -> true;
 }

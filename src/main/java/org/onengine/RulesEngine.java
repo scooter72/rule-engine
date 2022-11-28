@@ -16,8 +16,8 @@ import java.util.concurrent.TimeUnit;
  * of each rule and executes its actions if the condition evaluates to true.
  */
 public class RulesEngine {
-    private static final Logger LOGGER = LoggerFactory.getLogger(RulesEngine.class);
-    private static final ExecutorService executor = Executors.newFixedThreadPool(10);
+    private static final Logger logger = LoggerFactory.getLogger(RulesEngine.class);
+    private static final ExecutorService executor = Executors.newFixedThreadPool(8);
 
     /***
      * iterates over the set of rules, evaluates the condition
@@ -28,7 +28,7 @@ public class RulesEngine {
     public Map<Rule, Boolean> fire(Set<Rule> rules, Facts facts) {
         Map<Rule, Boolean> results = new HashMap<>();
 
-        LOGGER.debug("Rules evaluation started");
+        logger.debug("Rules evaluation started");
         rules.forEach(rule -> executor.execute(() -> fire(new RuleEvaluationContext(rule, facts, results))));
         awaitTerminationAfterShutdown(executor);
 
@@ -40,24 +40,25 @@ public class RulesEngine {
         Facts facts = context.getFacts();
         Map<Rule, Boolean> results = context.getResults();
 
-            boolean isRuleViolated = false;
+        boolean isRuleViolated = false;
+
+        try {
+            logger.debug("Evaluating " + rule.getName());
+            isRuleViolated = rule.evaluate(facts);
+        } catch (RuntimeException ex) {
+            logger.error("Rule '" + rule.getName() + "' evaluated with error", ex);
+        }
+
+        results.put(rule, isRuleViolated);
+
+        if (isRuleViolated) {
+            logger.debug(rule.getName() + " has been violated, executing actions");
 
             try {
-                LOGGER.debug("Evaluating " + rule.getName());
-                isRuleViolated = rule.evaluate(facts);
-            } catch (RuntimeException ex) {
-                LOGGER.error("Rule '" + rule.getName() + "' evaluated with error", ex);
+                rule.execute(facts);
+            } catch (ActionExecutionException ex) {
+                logger.error("Rule '" + rule.getName() + "' performed with error", ex);
             }
-
-            results.put(rule, isRuleViolated);
-
-            if (isRuleViolated) {
-                LOGGER.debug(rule.getName() + " has been violated, executing actions");
-                try {
-                    rule.execute(facts);
-                } catch (ActionExecutionException ex) {
-                    LOGGER.error("Rule '" + rule.getName() + "' performed with error", ex);
-                }
         }
     }
 

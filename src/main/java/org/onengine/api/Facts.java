@@ -132,6 +132,7 @@ public class Facts implements Iterable<Fact<?>> {
     public String toString() {
         Iterator<Fact<?>> iterator = facts.iterator();
         StringBuilder stringBuilder = new StringBuilder("[");
+
         while (iterator.hasNext()) {
             stringBuilder.append(iterator.next().toString());
             if (iterator.hasNext()) {
@@ -139,6 +140,7 @@ public class Facts implements Iterable<Fact<?>> {
             }
         }
         stringBuilder.append("]");
+
         return stringBuilder.toString();
     }
 }

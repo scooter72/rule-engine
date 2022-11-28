@@ -15,14 +15,13 @@ import java.util.List;
 
 /**
  * A Rule implementation that uses
- * <a href="https://github.com/mvel/mvel">MVEL</a> to evaluate and execute the rule.
+ * <a href="https://github.com/mvel/mvel">MVEL</a> to evaluate and execute a rule.
  * MVEL is an expression language based on Java-syntax.
  */
 @ToString
 public class MVELRule extends BasicRule {
     private Condition condition = Condition.FALSE;
     private final List<Action> actions = new ArrayList<>();
-
     private final ParserContext parserContext;
 
     public MVELRule(ParserContext parserContext) {

@@ -1,5 +1,11 @@
 rules:
   - rule:
+    name: "Credit card rule"
+    description: "if a credit card pattern is detected take an action"
+    condition: "patternDetector.find(data, cc_regex)"
+    actions:
+      - "System.out.println(\" credit card pattern detected!\");"
+  - rule:
     name: "SSN rule"
     description: "if ssn pattern is detected take an action"
     condition: "patternDetector.find(data, ssn_regex)"
@@ -11,12 +17,7 @@ rules:
     condition: "patternDetector.find(data, iban_regex)"
     actions:
       - "System.out.println(\" IBAN pattern detected!\");"
-  - rule:
-    name: "Credit card rule"
-    description: "if a credit card pattern is detected take an action"
-    condition: "patternDetector.find(data, cc_regex)"
-    actions:
-      - "System.out.println(\" credit card pattern detected!\");"
+
   - rule:
     name: "SSN rule that sends an email"
     description: "if ssn pattern is detected take an action"
